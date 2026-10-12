@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aman General Store - Ahmedabad | 9120095645</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--green:#0e9f6e;--bg:#f7f8f3;--card:#fff;--text:#121212;--muted:#6b7280;--border:#e8e8e0;--orange:#ff8a00}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Outfit';background:var(--bg);color:var(--text)}
+button{font-family:inherit;cursor:pointer;border:none}
+.header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.logo{font-weight:800;font-size:20px;display:flex;gap:8px;align-items:center}.logo-badge{width:36px;height:36px;background:var(--green);color:#fff;border-radius:10px;display:grid;place-items:center}
+.cart-btn{background:var(--text);color:#fff;padding:10px 18px;border-radius:100px;font-weight:700;display:flex;gap:8px;align-items:center}
+.cart-count{background:var(--orange);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px}
+.hero{max-width:1280px;margin:auto;padding:16px;display:grid;grid-template-columns:1.2fr.8fr;gap:16px}
+.hero-main{background:var(--green);color:#fff;border-radius:24px;padding:24px;min-height:360px;display:flex;flex-direction:column;justify-content:space-between}
+.hero-side{display:grid;gap:16px}.side-card{background:#fff2a8;border-radius:24px;padding:20px;position:relative;min-height:170px}.side-card.orange{background:#ffede0}
+.filters{max-width:1280px;margin:12px auto;padding:0 16px;display:flex;gap:8px;overflow:auto}.f-btn{padding:10px 18px;border-radius:100px;background:#fff;border:1px solid var(--border);font-weight:600;white-space:nowrap;color:var(--muted)}.f-btn.active{background:var(--text);color:#fff}
+.search-wrap{max-width:1280px;margin:0 auto;padding:0 16px}.search{background:#fff;border:1px solid var(--border);border-radius:100px;padding:12px 16px;display:flex;gap:8px;align-items:center}.search input{border:none;outline:none;width:100%;font-size:14px}
+.products{max-width:1280px;margin:auto;padding:12px 16px 100px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:900px){.products{grid-template-columns:repeat(4,1fr)}}
+.p-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:10px}
+.p-img{height:130px;background:#f4f4ef;border-radius:12px;display:grid;place-items:center;font-size:48px;position:relative}.p-tag{position:absolute;top:6px;left:6px;background:#d8ff5e;padding:3px 8px;border-radius:100px;font-size:10px;font-weight:800}
+.p-cat{font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;margin-top:8px}.p-name{font-weight:700;font-size:15px;margin-top:2px}.p-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.p-price{font-weight:800}.p-price s{font-size:11px;color:var(--muted);margin-left:4px}
+.add-btn{width:32px;height:32px;border-radius:50%;background:var(--text);color:#fff;font-size:18px}
+.drawer{position:fixed;inset:0;z-index:999;display:none}.drawer.open{display:block}
+.backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.45)}
+.panel{position:absolute;right:0;top:0;bottom:0;width:420px;max-width:92vw;background:#fff;transform:translateX(0);animation:slideIn 0.3s ease;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(0,0,0,0.2)}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.panel-head{padding:18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:18px}
+.cart-items{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.c-item{display:flex;gap:10px;background:var(--bg);padding:10px;border-radius:12px;align-items:center}
+.c-img{width:50px;height:50px;background:#fff;border-radius:10px;display:grid;place-items:center;font-size:26px}
+.c-qty{margin-left:auto;display:flex;align-items:center;gap:8px}.q-btn{width:26px;height:26px;border-radius:50%;background:#fff;border:1px solid var(--border)}
+.panel-foot{padding:16px;border-top:1px solid var(--border);background:#fff}
+.row{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin:4px 0}.row.total{font-size:18px;color:var(--text);font-weight:800;margin-top:8px}
+.checkout{width:100%;margin-top:12px;background:var(--green);color:#fff;padding:15px;border-radius:100px;font-weight:800;font-size:15px}
+.input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--border);margin-top:8px;font-family:inherit;font-size:14px}
+</style>
+</head>
+<body>
+<header class="header"><div class="nav"><div class="logo"><div class="logo-badge">🛒</div> Aman General</div><button class="cart-btn" id="openCart">Cart <span class="cart-count" id="cartCount">0</span></button></div></header>
+
+<div class="hero"><div class="hero-main"><div><h1 style="font-size:42px;line-height:0.9;font-weight:800">Fresh<br>Groceries<br><span style="color:#d8ff5e">Daily</span></h1><p style="margin-top:10px;opacity:.9">30 min delivery - Ahmedabad - 9120095645</p><button style="margin-top:16px;background:#fff;color:var(--text);padding:12px 18px;border-radius:100px;font-weight:700" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now →</button></div><div style="display:flex;gap:10px;margin-top:16px"><div style="background:rgba(255,255,255,.15);padding:10px 14px;border-radius:12px"><b>500+</b><br>Products</div><div style="background:rgba(255,255,255,.15);padding:10px 14px;border-radius:12px"><b>30 min</b><br>Delivery</div></div></div><div class="hero-side"><div class="side-card orange"><h3>Daily Essentials</h3><p>Atta + Oil + Sugar</p><div style="font-size:44px;margin-top:16px">🧺</div></div><div class="side-card"><h3>Farm Vegetables</h3><p>Direct from farm</p><div style="font-size:44px;margin-top:16px">🥦</div></div></div></div>
+
+<div class="search-wrap"><div class="search">🔍<input id="searchInput" placeholder="Search atta, oil, biscuits..."><span onclick="clearSearch()" style="cursor:pointer">✕</span></div></div>
+<div class="filters" id="filters"></div>
+<div class="products" id="products"></div>
+
+<!-- CART DRAWER - AB KAAM KAREGA -->
+<div class="drawer" id="drawer">
+  <div class="backdrop" onclick="toggleCart(false)"></div>
+  <div class="panel">
+    <div class="panel-head"><span>Your Cart (<span id="cCount2">0</span>)</span><button onclick="toggleCart(false)" style="width:32px;height:32px;border-radius:50%;background:var(--bg)">✕</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="panel-foot">
+      <input class="input" id="custName" placeholder="Your Name">
+      <input class="input" id="custAddr" placeholder="Full Address, Ahmedabad">
+      <div class="row" style="margin-top:12px"><span>Subtotal</span><span id="subTotal">₹0</span></div>
+      <div class="row"><span>Delivery</span><span style="color:var(--green);font-weight:700">FREE</span></div>
+      <div class="row total"><span>Total</span><span id="grandTotal">₹0</span></div>
+      <button class="checkout" onclick="checkout()">Checkout on WhatsApp → 9120095645</button>
+      <p style="text-align:center;margin-top:8px;font-size:11px;color:var(--muted)">Order goes to 9120095645</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const PRODUCTS=[
+{id:1,name:"Aashirvaad Atta 10kg",cat:"Atta & Flour",price:480,old:520,emoji:"🌾",tag:"Best Seller"},
+{id:2,name:"Fortune Oil 1L",cat:"Oil",price:145,old:165,emoji:"🛢️",tag:"-12%"},
+{id:3,name:"Tata Salt 1kg",cat:"Masala",price:28,old:32,emoji:"🧂"},
+{id:4,name:"Amul Milk 500ml",cat:"Dairy",price:32,old:34,emoji:"🥛",tag:"Fresh"},
+{id:5,name:"Onion 1kg",cat:"Vegetables",price:35,old:45,emoji:"🧅"},
+{id:6,name:"Tomato 1kg",cat:"Vegetables",price:40,old:50,emoji:"🍅"},
+{id:7,name:"Potato 1kg",cat:"Vegetables",price:30,old:40,emoji:"🥔"},
+{id:8,name:"Sugar 1kg",cat:"Atta & Flour",price:46,old:52,emoji:"🍬"},
+{id:9,name:"Surf Excel 1kg",cat:"Cleaning",price:195,old:220,emoji:"🧼"},
+{id:10,name:"Parle-G Biscuit Pack",cat:"Snacks",price:50,old:60,emoji:"🍪"},
+{id:11,name:"Basmati Rice 5kg",cat:"Rice",price:550,old:620,emoji:"🍚"},
+{id:12,name:"Eggs Tray 30 pcs",cat:"Dairy",price:180,old:210,emoji:"🥚"},
+];
+const CATS=["All",...new Set(PRODUCTS.map(p=>p.cat))];
+let activeCat="All", searchQ="", cart={};
+const filtersEl=document.getElementById('filters');
+CATS.forEach(c=>{
+  const b=document.createElement('button');b.className='f-btn'+(c===activeCat?' active':'');b.textContent=c;
+  b.onclick=()=>{activeCat=c;document.querySelectorAll('.f-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');render();}
+  filtersEl.appendChild(b);
+});
+function render(){
+  const grid=document.getElementById('products');grid.innerHTML='';
+  PRODUCTS.filter(p=>{
+    const catOk=activeCat==="All"||p.cat===activeCat;
+    const sOk=p.name.toLowerCase().includes(searchQ.toLowerCase());
+    return catOk&&sOk;
+  }).forEach(p=>{
+    const d=document.createElement('div');d.className='p-card';
+    d.innerHTML=`<div class="p-img">${p.tag?`<span class="p-tag">${p.tag}</span>`:''}${p.emoji}</div><div class="p-cat">${p.cat}</div><div class="p-name">${p.name}</div><div class="p-meta"><div class="p-price">₹${p.price}<s>₹${p.old}</s></div><button class="add-btn" onclick="addToCart(${p.id})">+</button></div>`;
+    grid.appendChild(d);
+  });
+}
+function addToCart(id){cart[id]=(cart[id]||0)+1;updateCart();toggleCart(true);}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];updateCart();}
+function updateCart(){
+  const count=Object.values(cart).reduce((a,b)=>a+b,0);
+  document.getElementById('cartCount').textContent=count;
+  document.getElementById('cCount2').textContent=count;
+  const items=document.getElementById('cartItems');items.innerHTML='';let sub=0;
+  Object.entries(cart).forEach(([id,qty])=>{
+    const p=PRODUCTS.find(x=>x.id==id);sub+=p.price*qty;
+    const row=document.createElement('div');row.className='c-item';
+    row.innerHTML=`<div class="c-img">${p.emoji}</div><div><div style="font-weight:700">${p.name}</div><div style="font-size:12px;color:var(--muted)">₹${p.price} x ${qty} = ₹${p.price*qty}</div></div><div class="c-qty"><button class="q-btn" onclick="changeQty(${id},-1)">−</button><b>${qty}</b><button class="q-btn" onclick="changeQty(${id},1)">+</button></div>`;
+    items.appendChild(row);
+  });
+  if(count===0) items.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted)">🛒 Cart empty<br>Add some items!</div>';
+  document.getElementById('subTotal').textContent='₹'+sub;
+  document.getElementById('grandTotal').textContent='₹'+sub;
+}
+function toggleCart(open){
+  const d=document.getElementById('drawer');
+  if(open){d.classList.add('open');document.body.style.overflow='hidden';}
+  else{d.classList.remove('open');document.body.style.overflow='';}
+}
+document.getElementById('openCart').onclick=()=>toggleCart(true);
+document.getElementById('searchInput').addEventListener('input',e=>{searchQ=e.target.value;render();});
+function clearSearch(){document.getElementById('searchInput').value='';searchQ='';render();}
+function checkout(){
+  if(Object.keys(cart).length===0) return alert('Cart empty hai!');
+  const name=document.getElementById('custName').value||'Customer';
+  const addr=document.getElementById('custAddr').value||'Ahmedabad';
+  let msg=`Hi Aman General Store,%0A*New Order*%0AName: ${name}%0AAddress: ${addr}%0A%0A`;
+  Object.entries(cart).forEach(([id,qty])=>{const p=PRODUCTS.find(x=>x.id==id);msg+=`${p.name} x${qty} = ₹${p.price*qty}%0A`;});
+  msg+=`%0A*Total: ${document.getElementById('grandTotal').textContent}*`;
+  window.open(`https://wa.me/919120095645?text=${msg}`,'_blank');
+}
+render();updateCart();
+</script>
+</body>
+</html>
